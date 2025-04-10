@@ -5,7 +5,10 @@
   "type": "module",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate": "npx drizzle-kit generate",
+    "migrate": "npx drizzle-kit migrate",
+    "studio": "npx drizzle-kit studio",
+    "start": "nodemon src/app.js"
   },
   "keywords": [],
   "author": "",

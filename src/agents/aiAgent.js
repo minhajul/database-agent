@@ -5,10 +5,11 @@ const client = new AzureOpenAI({
     endpoint: process.env.AZURE_OPENAI_ENDPOINT,
     apiKey: process.env.AZURE_OPENAI_API_KEY,
     apiVersion : process.env.AZURE_API_VERSION,
-    deployment: process.env.AZURE_DEPLOYMENT
+    deployment: process.env.AZURE_OPENAI_DEPLOYMENT
 })
 
 export async function generateData(userPrompt) {
+
     try {
         const systemPrompt = `
         You are a database assistant.
@@ -32,7 +33,7 @@ export async function generateData(userPrompt) {
                 }
             ],
             temperature: 0.7,
-            response_format: { type: "json_object" }
+            response_format: {type: "json_object"}
         });
 
         const response = aiResponse.choices[0].message.content;
