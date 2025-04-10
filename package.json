@@ -1,0 +1,29 @@
+{
+  "name": "database-agent",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.39.0",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9",
+    "openai": "^4.91.1",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.11",
+    "drizzle-kit": "^0.30.3",
+    "tsx": "^4.19.2"
+  }
+}
