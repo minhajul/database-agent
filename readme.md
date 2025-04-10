@@ -36,7 +36,7 @@ We're using Drizzle to interact with the PostgreSQL database. To modify the data
 Run this ```cp .env.example .env``` command to create a ```.env``` file with the example from ```.env.example```:
 
 ```
-DATABASE_URL=
+DATABASE_URL=postgresql://admin:admin@localhost:5431/postgres
 AZURE_OPENAI_ENDPOINT=
 AZURE_OPENAI_DEPLOYMENT=
 AZURE_OPENAI_API_KEY=
