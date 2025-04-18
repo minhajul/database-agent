@@ -12,25 +12,25 @@ export async function generateData(userPrompt) {
 
     try {
         const systemPrompt = `
-        You are a database assistant.
-        Based on the following prompt, generate valid SQL queries for PostgreSQL from user prompts.
-        Consider that if verified_at is null, user does not verified their identity for users table.
-        If user asked to give total order amount, calculate total_price column value from orders table.
-        Only return the SQL query, do not include any explanations or additional text.
+            You are an expert SQL assistant specialized in PostgreSQL.
+            
+            Your task is to generate syntactically correct and optimized SQL queries based on the user's prompt.
+            
+            Context:
+            - Use PostgreSQL syntax.
+            - The database contains a users table where a user is considered unverified if verified_at is NULL.
+            - The orders table includes a total_price column that represents the order amount. Use this for any total or sum-related queries.
+            - Only return the raw SQL query. Do not include explanations, comments, or additional text.
+            
+            Always infer the most appropriate and efficient query based on the user's request.
         `;
 
         const prompt = `Generate a SQL query for: "${userPrompt}". Respond only with JSON format like: { "query": "YOUR_SQL_QUERY" }.`
 
         const aiResponse = await client.chat.completions.create({
             messages: [
-                {
-                    role: "system",
-                    content: systemPrompt
-                },
-                {
-                    role: "user",
-                    content: prompt
-                }
+                {role: "system", content: systemPrompt},
+                {role: "user", content: prompt}
             ],
             temperature: 0.7,
             response_format: {type: "json_object"}
