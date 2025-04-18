@@ -22,15 +22,6 @@ We're using Docker Compose to run the PostgreSQL database. Simply start Docker a
 
 ```docker-compose up --build -d```
 
-Also run below command to migrate the database:
-
-```
-npm run generate
-npm run migrate
-```
-
-We're using Drizzle to interact with the PostgreSQL database. To modify the database schema, update ```schema.js``` and run ```npm run migrate``` to apply the changes.
-
 ### 4. Create a ```.env``` File
 
 Run this ```cp .env.example .env``` command to create a ```.env``` file with the example from ```.env.example```:
@@ -42,6 +33,15 @@ AZURE_OPENAI_DEPLOYMENT=
 AZURE_OPENAI_API_KEY=
 AZURE_API_VERSION=
 ```
+
+Also, run the below command to migrate the database:
+
+```
+npm run generate
+npm run migrate
+```
+
+We're using Drizzle to interact with the PostgreSQL database. To modify the database schema, update ```schema.js``` and run ```npm run migrate``` to apply the changes.
 
 ### 5. Run the App
 
