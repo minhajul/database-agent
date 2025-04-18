@@ -4,7 +4,7 @@ import {db} from '../db/index.js'
 const client = new AzureOpenAI({
     endpoint: process.env.AZURE_OPENAI_ENDPOINT,
     apiKey: process.env.AZURE_OPENAI_API_KEY,
-    apiVersion : process.env.AZURE_API_VERSION,
+    apiVersion: process.env.AZURE_API_VERSION,
     deployment: process.env.AZURE_OPENAI_DEPLOYMENT
 })
 
@@ -40,17 +40,9 @@ export async function generateData(userPrompt) {
 
         const sqlQuery = JSON.parse(response).query;
 
-        const results = await db.execute(sqlQuery);
-
-        return {
-            success: true,
-            data: results
-        };
+        return await db.execute(sqlQuery);
 
     } catch (error) {
-        return {
-            success: false,
-            error: error.response?.data || error.message
-        };
+        return  error.response?.data || error.message;
     }
 }
