@@ -1,22 +1,22 @@
-import 'dotenv/config';
+import cluster from 'cluster';
+import os from 'os';
 import express from 'express';
 import cors from 'cors';
-import {createServer} from 'http';
 import dotenv from 'dotenv';
-import bodyParser from "body-parser";
 import agentRoutes from './routes/agentRoutes.js';
 
 dotenv.config();
 
+const numCPUs = os.cpus().length;
+
 const app = express();
 app.use(cors());
-
-app.use(bodyParser.json());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 // Routes
+app.get('/health', (req, res) => res.status(200).send('OK'));
 app.use('/api/database-agents', agentRoutes);
 
 // Global Error Handler (Prevents Server Crash)
@@ -25,9 +25,18 @@ app.use((err, req, res, next) => {
     res.status(500).json({error: "Internal Server Error"});
 });
 
-const httpServer = createServer(app);
-
-const PORT = process.env.PORT || 5001;
-httpServer.listen(PORT, () => {
-    console.log(`Backend server is running on port ${PORT}`);
-});
+if (cluster.isPrimary) {
+    console.log(`Primary process running on PID: ${process.pid}`);
+    for (let i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
+    cluster.on('exit', (worker, code, signal) => {
+        console.log(`Worker ${worker.process.pid} died. Restarting...`);
+        cluster.fork();
+    });
+} else {
+    const PORT = process.env.PORT || 5001;
+    app.listen(PORT, () => {
+        console.log(`Backend server is running on port ${PORT}, PID: ${process.pid}`);
+    });
+}
