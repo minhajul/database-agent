@@ -3,6 +3,7 @@ import os from 'os';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import rateLimiter from './middlewares/rateLimiter.js';
 import agentRoutes from './routes/agentRoutes.js';
 
 dotenv.config();
@@ -14,6 +15,8 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(rateLimiter.rateLimiterMiddleware);
+app.enable('trust proxy');
 
 // Routes
 app.get('/health', (req, res) => res.status(200).send('OK'));
