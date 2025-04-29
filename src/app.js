@@ -3,6 +3,7 @@ import os from 'os';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
 import rateLimiter from './middlewares/rateLimiter.js';
 import agentRoutes from './routes/agentRoutes.js';
 
@@ -11,6 +12,7 @@ dotenv.config();
 const numCPUs = os.cpus().length;
 
 const app = express();
+app.use(helmet());
 app.use(cors());
 
 app.use(express.json());
